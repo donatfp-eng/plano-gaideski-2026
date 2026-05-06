@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plano de Ação — Gaideski 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Outfit', sans-serif; background: #f4f6f9; color: #1a1a2e; font-size: 15px; }
+
+/* HEADER */
+.header {
+  background: #1E3A5F;
+  padding: 0 40px;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.header-left { display: flex; align-items: center; gap: 16px; }
+.logo { font-size: 18px; font-weight: 700; color: #fff; letter-spacing: -0.3px; }
+.logo span { color: #e07070; }
+.header-badge {
+  background: #A61C23; color: #fff;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+  padding: 3px 10px; border-radius: 4px; text-transform: uppercase;
+}
+.header-right { display: flex; gap: 6px; }
+.nav-btn {
+  background: transparent; border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.7); font-family: 'Outfit', sans-serif;
+  font-size: 13px; padding: 7px 16px; border-radius: 6px; cursor: pointer;
+  transition: all 0.15s;
+}
+.nav-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.nav-btn.active { background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.5); font-weight: 600; }
+
+/* PAGES */
+.page { display: none; padding: 32px 40px; max-width: 1100px; margin: 0 auto; }
+.page.active { display: block; }
+
+/* ─── DASHBOARD ─── */
+.dash-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+.stat {
+  background: #fff; border-radius: 12px; padding: 22px 20px;
+  border-left: 4px solid transparent;
+}
+.stat.red { border-color: #A61C23; }
+.stat.amber { border-color: #d97706; }
+.stat.green { border-color: #15803d; }
+.stat.navy { border-color: #1E3A5F; }
+.stat-label { font-size: 12px; font-weight: 500; color: #64748b; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 8px; }
+.stat-value { font-size: 30px; font-weight: 700; line-height: 1; margin-bottom: 6px; }
+.stat-value.red { color: #A61C23; }
+.stat-value.amber { color: #d97706; }
+.stat-value.green { color: #15803d; }
+.stat-value.navy { color: #1E3A5F; }
+.stat-sub { font-size: 12px; color: #94a3b8; }
+
+.alert-box {
+  background: #fff; border-radius: 12px; padding: 18px 22px;
+  border-left: 5px solid #A61C23; margin-bottom: 28px;
+  display: flex; align-items: flex-start; gap: 14px;
+}
+.alert-icon { font-size: 22px; flex-shrink: 0; }
+.alert-text strong { font-size: 15px; font-weight: 600; color: #A61C23; display: block; margin-bottom: 4px; }
+.alert-text p { font-size: 13px; color: #475569; line-height: 1.6; }
+
+.dash-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.panel { background: #fff; border-radius: 12px; padding: 20px 22px; }
+.panel-title { font-size: 13px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid #f1f5f9; }
+.regime-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f8fafc; }
+.regime-item:last-child { border-bottom: none; }
+.regime-name { font-size: 14px; font-weight: 500; color: #1a1a2e; }
+.regime-sub { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+.regime-margin { font-size: 18px; font-weight: 700; }
+.bar-wrap { background: #f1f5f9; border-radius: 4px; height: 5px; margin-top: 6px; width: 100px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; }
+
+/* META BOX */
+.meta-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.meta-item { background: #f8fafc; border-radius: 8px; padding: 14px 16px; border: 1px solid #e2e8f0; }
+.meta-item.achieved { background: #f0fdf4; border-color: #bbf7d0; }
+.meta-item.urgent { background: #fef2f2; border-color: #fecaca; }
+.meta-horizon { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #94a3b8; margin-bottom: 6px; }
+.meta-target { font-size: 14px; font-weight: 600; color: #1a1a2e; margin-bottom: 4px; }
+.meta-current { font-size: 12px; color: #64748b; }
+
+/* ─── CHECKLIST ─── */
+.section-title { font-size: 22px; font-weight: 700; color: #1E3A5F; margin-bottom: 6px; }
+.section-sub { font-size: 14px; color: #64748b; margin-bottom: 24px; }
+
+.check-group { margin-bottom: 24px; }
+.group-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 18px; border-radius: 10px 10px 0 0;
+  border-bottom: none;
+}
+.group-header.red { background: #A61C23; }
+.group-header.amber { background: #d97706; }
+.group-header.navy { background: #1E3A5F; }
+.group-title { font-size: 14px; font-weight: 700; color: #fff; }
+.group-count { font-size: 12px; color: rgba(255,255,255,0.7); margin-left: auto; }
+.group-progress { font-size: 12px; color: rgba(255,255,255,0.9); font-weight: 600; }
+
+.check-list { background: #fff; border-radius: 0 0 10px 10px; border: 1px solid #e2e8f0; border-top: none; overflow: hidden; }
+.check-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 14px 18px; border-bottom: 1px solid #f1f5f9;
+  cursor: pointer; transition: background 0.1s; user-select: none;
+}
+.check-item:last-child { border-bottom: none; }
+.check-item:hover { background: #fafbfc; }
+.check-item.done { background: #f0fdf4; }
+.check-item.done .check-text { text-decoration: line-through; color: #94a3b8; }
+.check-item.done .check-label { opacity: 0.5; }
+
+.checkbox {
+  width: 22px; height: 22px; border-radius: 6px; border: 2px solid #cbd5e1;
+  flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  margin-top: 1px; transition: all 0.15s;
+}
+.check-item.done .checkbox { background: #15803d; border-color: #15803d; }
+.checkmark { color: #fff; font-size: 13px; display: none; }
+.check-item.done .checkmark { display: block; }
+
+.check-body { flex: 1; }
+.check-text { font-size: 14px; font-weight: 500; color: #1a1a2e; line-height: 1.5; margin-bottom: 4px; }
+.check-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.tag {
+  font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.tag-jorge { background: #fce7f3; color: #be185d; }
+.tag-ops { background: #e0f2fe; color: #0369a1; }
+.tag-dir { background: #fef3c7; color: #92400e; }
+.tag-fin { background: #f0fdf4; color: #15803d; }
+.check-deadline { font-size: 12px; color: #94a3b8; }
+.check-detail { font-size: 12px; color: #64748b; margin-top: 4px; line-height: 1.5; }
+
+/* progress header */
+.progress-bar-outer { background: #e2e8f0; border-radius: 4px; height: 6px; margin-top: 20px; margin-bottom: 6px; overflow: hidden; }
+.progress-bar-inner { height: 100%; border-radius: 4px; background: #15803d; transition: width 0.4s; }
+.progress-label { font-size: 12px; color: #64748b; margin-bottom: 24px; }
+
+/* ─── ANALYSIS (collapsed) ─── */
+.accord { background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 12px; overflow: hidden; }
+.accord-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px; cursor: pointer; user-select: none;
+}
+.accord-head:hover { background: #fafbfc; }
+.accord-title { font-size: 15px; font-weight: 600; color: #1E3A5F; }
+.accord-sub { font-size: 13px; color: #94a3b8; margin-top: 2px; }
+.accord-arrow { font-size: 18px; color: #94a3b8; transition: transform 0.2s; }
+.accord.open .accord-arrow { transform: rotate(180deg); }
+.accord-body { display: none; padding: 0 20px 20px; border-top: 1px solid #f1f5f9; }
+.accord.open .accord-body { display: block; }
+
+table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 13px; }
+th { text-align: left; padding: 8px 12px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: #94a3b8; font-weight: 600; background: #f8fafc; border-bottom: 1px solid #e2e8f0; }
+td { padding: 10px 12px; border-bottom: 1px solid #f8fafc; color: #1a1a2e; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #fafbfc; }
+.loss { color: #A61C23; font-weight: 600; }
+.badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
+.b-plan { background: #e0f2fe; color: #0369a1; }
+.b-aum { background: #fef2f2; color: #A61C23; }
+.b-av { background: #fef3c7; color: #92400e; }
+
+.script-card { background: #f8fafc; border-radius: 8px; padding: 16px; margin-top: 14px; border-left: 3px solid #1E3A5F; }
+.script-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #94a3b8; margin-bottom: 8px; }
+.script-text { font-size: 13px; color: #334155; line-height: 1.7; font-style: italic; }
+.script-tip { font-size: 12px; color: #d97706; background: #fef3c7; border-radius: 6px; padding: 8px 12px; margin-top: 10px; }
+
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <div class="logo">Gaideski <span>Contabilidade</span></div>
+    <div class="header-badge">Plano 2026</div>
+  </div>
+  <div class="header-right">
+    <button class="nav-btn active" onclick="goTo('dash', this)">Dashboard</button>
+    <button class="nav-btn" onclick="goTo('check', this)">Checklist</button>
+    <button class="nav-btn" onclick="goTo('analise', this)">Análise</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- DASHBOARD -->
+<!-- ═══════════════════════════════════════ -->
+<div id="page-dash" class="page active">
+
+  <div class="alert-box" style="margin-top:8px;">
+    <div class="alert-icon">⚠️</div>
+    <div class="alert-text">
+      <strong>Situação crítica — ação imediata necessária</strong>
+      <p>94 clientes deficitários geram perda de <strong>R$ 53.680/mês</strong>. Com o Plano Híbrido (migração Planicon + reajuste LR/LP), a margem sobe de 27% para 43% em 6 meses e o EBITDA dobra.</p>
+    </div>
+  </div>
+
+  <div class="dash-grid">
+    <div class="stat navy">
+      <div class="stat-label">Receita mensal</div>
+      <div class="stat-value navy">R$ 327k</div>
+      <div class="stat-sub">272 clientes · R$ 3,9M/ano</div>
+    </div>
+    <div class="stat red">
+      <div class="stat-label">Clientes com prejuízo</div>
+      <div class="stat-value red">94</div>
+      <div class="stat-sub">34,6% da carteira · urgente</div>
+    </div>
+    <div class="stat amber">
+      <div class="stat-label">Margem atual</div>
+      <div class="stat-value amber">27,2%</div>
+      <div class="stat-sub">Meta: 30% em 30 dias · 35% em 24m</div>
+    </div>
+    <div class="stat green">
+      <div class="stat-label">Perda mensal evitável</div>
+      <div class="stat-value red">-R$ 53,7k</div>
+      <div class="stat-sub">R$ 644k/ano jogados fora</div>
+    </div>
+  </div>
+
+  <div class="dash-row">
+    <div class="panel">
+      <div class="panel-title">Margem por regime tributário</div>
+
+      <div class="regime-item">
+        <div>
+          <div class="regime-name">Lucro Presumido</div>
+          <div class="regime-sub">26 clientes · ticket médio R$ 923</div>
+          <div class="bar-wrap" style="margin-top:8px;"><div class="bar-fill" style="width:80%;background:#15803d;"></div></div>
+        </div>
+        <div class="regime-margin" style="color:#15803d;">79,8%</div>
+      </div>
+
+      <div class="regime-item">
+        <div>
+          <div class="regime-name">Lucro Real</div>
+          <div class="regime-sub">85 clientes · ticket médio R$ 2.256</div>
+          <div class="bar-wrap" style="margin-top:8px;"><div class="bar-fill" style="width:31%;background:#d97706;"></div></div>
+        </div>
+        <div class="regime-margin" style="color:#d97706;">31,2%</div>
+      </div>
+
+      <div class="regime-item">
+        <div>
+          <div class="regime-name">Simples Nacional</div>
+          <div class="regime-sub">158 clientes · ticket médio R$ 700</div>
+          <div class="bar-wrap" style="margin-top:8px;"><div class="bar-fill" style="width:8%;background:#A61C23;"></div></div>
+        </div>
+        <div class="regime-margin" style="color:#A61C23;">8,4%</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Metas do plano</div>
+      <div class="meta-grid">
+        <div class="meta-item urgent">
+          <div class="meta-horizon">30 dias</div>
+          <div class="meta-target">Margem ≥ 32%</div>
+          <div class="meta-current">Hoje: 27,2%</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-horizon">90 dias</div>
+          <div class="meta-target">Margem ≥ 38%</div>
+          <div class="meta-current">73 clientes migrados</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-horizon">12 meses</div>
+          <div class="meta-target">Margem 43%</div>
+          <div class="meta-current">EBITDA R$ 1,9M</div>
+        </div>
+        <div class="meta-item urgent">
+          <div class="meta-horizon">Urgente agora</div>
+          <div class="meta-target">-R$ 32k/mês perda</div>
+          <div class="meta-current">Eliminar 60% em 30d</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-horizon">Planicon</div>
+          <div class="meta-target">150 clientes</div>
+          <div class="meta-current">Em 12 meses</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-horizon">Valuation</div>
+          <div class="meta-target">R$ 9,5M</div>
+          <div class="meta-current">C/ Plano Híbrido (C3)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- CHECKLIST -->
+<!-- ═══════════════════════════════════════ -->
+<div id="page-check" class="page">
+
+  <div class="section-title">Checklist de Execução</div>
+  <div class="section-sub">Clique em cada item para marcar como concluído. Progresso salvo automaticamente.</div>
+
+  <div class="progress-bar-outer"><div class="progress-bar-inner" id="progressBar" style="width:0%"></div></div>
+  <div class="progress-label" id="progressLabel">0 de 18 tarefas concluídas</div>
+
+  <!-- GRUPO 1 -->
+  <div class="check-group">
+    <div class="group-header red">
+      <div class="group-title">🔴 Semana 1 — Preparação (Dias 1–7)</div>
+      <div class="group-progress" id="prog-1"></div>
+    </div>
+    <div class="check-list">
+      <div class="check-item" onclick="toggle(this)" data-group="1" data-id="1">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="check-body">
+          <div class="check-text">Reunião com a diretoria: validar Cenário Híbrido e autorizar execução</div>
+          <div class="check-meta">
+            <span class="tag tag-dir">Diretoria</span>
+            <span class="check-deadline">📅 Dia 1</span>
+          </div>
+          <div class="check-detail">Apresentar o plano e os 3 cenários. Obter aprovação formal para iniciar abordagem com clientes.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this)" data-group="1" data-id="2">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="check-body">
+          <div class="check-text">Confirmar com a equipe a lista final dos 73 clientes Planicon</div>
+          <div class="check-meta">
+            <span class="tag tag-jorge">Jorge</span>
+            <span class="tag tag-ops">Ops</span>
+            <span class="check-deadline">📅 Dia 2</span>
+          </div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this)" data-group="1" data-id="3">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="check-body">
+          <div class="check-text">Calcular honorário mínimo (margem 30%) para os 21 clientes LR/LP deficitários</div>
+          <div class="check-meta">
+            <span class="tag tag-jorge">Jorge</span>
+            <span class="check-deadline">📅 Dia 2–3</span>
+          </div>
+          <div class="check-detail">Usar: Honorário ideal = Custo real ÷ 0,70. Preparar tabela individual por cliente antes de qualquer contato.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this)" data-group="1" data-id="4">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="check-body">
+          <div class="check-text">Criar template do contrato Planicon no ClickSign (pronto para envio)</div>
+          <div class="check-meta">
+            <span class="tag tag-ops">Ops</span>
+            <span class="check-deadline">📅 Dia 3–4</span>
+          </div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this)" data-group="1" data-id="5">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="check-body">
+          <div class="check-text">Cancelar os 12 cadastros com honorário ≈ R$ 0,01 (sem receita real)</div>
+          <div class="check-meta">
+            <span class="tag tag-fin">Financeiro</span>
+            <span class="check-deadline">📅 Dia 3</span>
+          </div>
+          <div class="check-detail">Ação simples, sem contato com cliente. Elimina ruído na base e já reduz a contagem de deficitários.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRUPO 2 -->
+  <div class="check-group">
+    <div class="group-header red">
+      <div class="group-title">🔴 Semana 2 — Abertura (Dias 8–14)</div>
+      <div class="group-progress" id="prog-2"></div>
+    </div>
+    <div class="check-list">
+      <div class="check-item" onclick="toggle(this)" data-group="2" data-id="6">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="check-body">
+          <div class="check-text">Iniciar contato WhatsApp com os TOP 20 clientes de maior prejuízo (Planicon)</div>
+          <div class="check-meta">
+            <span class="tag tag-jorge">Jorge</span>
+            <span class="check-deadline">📅 Dia 8–9</span>
+          </div>
+          <div class="check-detail">Usar script de migração. Dar prazo de 7 dias para decisão. Registrar resposta no Kommo.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this)" data-group="2" data-id="7">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="check-body">
+          <div class="check-text">Agendar reuniões (vídeo ou presencial) com os 10 primeiros LR/LP deficitários</div>
+          <div class="check-meta">
+            <span class="tag tag-jorge">Jorge</span>
+            <span class="check-deadline">📅 Dia 8–10</span>
+          </div>
+          <div class="check-detail">Nunca apresentar reajuste só por WhatsApp. Reunião obrigatória. Levar o número do honorário ideal pronto.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this)" data-group="2" data-id="8">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="check-body">
+          <div class="check-text">Iniciar distratos dos clientes Planicon que recusaram na semana anterior</div>
+          <div class="check-meta">
+            <span class="tag tag-jorge">Jorge</span>
+            <span class="check-deadline">📅 Dia 12–14</span>
+          </div>
+          <div class="check-detail">Sem negociação de honorário para este grupo. Encerrar com 30 dias de aviso e indicar outro escritório.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this)" data-group="2" data-id="9">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="check-body">
+          <div class="check-text">Definir tabela de preços mínimos por regime tributário e porte</div>
+          <div class="check-meta">
+            <span class="tag tag-dir">Diretoria</span>
+            <span class="check-deadline">📅 Dia 10</span>
+          </div>
+          <div class="check-detail">Referência: LP ≥ R$ 800 · LR ≥ R$ 2.500 · SN/Planicon = R$ 280 fixo</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRUPO 3 -->
+  <div class="check-group">
+    <div class="group-header amber">
+      <div class="group-title">🟡 Semana 3 — Reajustes e migrações (Dias 15–21)</div>
+      <div class="group-progress" id="prog-3"></div>
+    </div>
+    <div class="check-list">
+      <div class="check-item" onclick="toggle(this)" data-group="3" data-id="10">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="check-body">
+          <div class="check-text">Realizar reuniões de reajuste com os 21 clientes LR/LP deficitários</div>
+          <div class="check-meta">
+            <span class="tag tag-jorge">Jorge</span>
+            <span class="check-deadline">📅 Dia 15–18</span>
+          </div>
+          <div class="check-detail">Para aumentos &gt;50%: propor escalonamento em 2 etapas. Prazo de aceite: 10 dias úteis.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this)" data-group="3" data-id="11">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="check-body">
+          <div class="check-text">Formalizar contratos de reajuste aceitos via ClickSign</div>
+          <div class="check-meta">
+            <span class="tag tag-ops">Ops</span>
+            <span class="check-deadline">📅 Dia 16–20</span>
+          </div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this)" data-group="3" data-id="12">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="check-body">
+          <div class="check-text">Continuar abordagem Planicon com os 53 clientes restantes</div>
+          <div class="check-meta">
+            <span class="tag tag-jorge">Jorge</span>
+            <span class="check-deadline">📅 Dia 15–21</span>
+          </div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this)" data-group="3" data-id="13">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="check-body">
+          <div class="check-text">Iniciar prospecção ativa: perfil LP e LR com ticket &gt; R$ 1.500</div>
+          <div class="check-meta">
+            <span class="tag tag-jorge">Jorge</span>
+            <span class="check-deadline">📅 Dia 15+</span>
+          </div>
+          <div class="check-detail">Prioridade: indicações dos 178 clientes saudáveis + LinkedIn empresários industriais de Curitiba.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRUPO 4 -->
+  <div class="check-group">
+    <div class="group-header navy">
+      <div class="group-title">🔵 Semana 4 — Consolidação (Dias 22–30)</div>
+      <div class="group-progress" id="prog-4"></div>
+    </div>
+    <div class="check-list">
+      <div class="check-item" onclick="toggle(this)" data-group="4" data-id="14">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="check-body">
+          <div class="check-text">Consolidar todos os distratos restantes — prazo final</div>
+          <div class="check-meta">
+            <span class="tag tag-jorge">Jorge</span>
+            <span class="check-deadline">📅 Dia 22–25</span>
+          </div>
+          <div class="check-detail">Sem clientes em "limbo". Quem não aceitou reajuste ou migração: distrato formalizado.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this)" data-group="4" data-id="15">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="check-body">
+          <div class="check-text">Financeiro recalcula margem consolidada com todos os ajustes realizados</div>
+          <div class="check-meta">
+            <span class="tag tag-fin">Financeiro</span>
+            <span class="check-deadline">📅 Dia 26–27</span>
+          </div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this)" data-group="4" data-id="16">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="check-body">
+          <div class="check-text">Iniciar abordagem dos clientes com margem entre 0% e 20% (próxima rodada)</div>
+          <div class="check-meta">
+            <span class="tag tag-jorge">Jorge</span>
+            <span class="check-deadline">📅 Dia 25+</span>
+          </div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this)" data-group="4" data-id="17">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="check-body">
+          <div class="check-text">Onboarding dos primeiros clientes migrados para o Planicon</div>
+          <div class="check-meta">
+            <span class="tag tag-ops">Ops</span>
+            <span class="check-deadline">📅 Dia 22–30</span>
+          </div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this)" data-group="4" data-id="18">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="check-body">
+          <div class="check-text">Apresentação de resultado à diretoria: margem atualizada, perda eliminada, próximos 90 dias</div>
+          <div class="check-meta">
+            <span class="tag tag-dir">Diretoria</span>
+            <span class="tag tag-jorge">Jorge</span>
+            <span class="check-deadline">📅 Dia 30</span>
+          </div>
+          <div class="check-detail">Meta mínima ao dia 30: eliminar R$ 32k/mês de perda (60% do total) e margem ≥ 32%.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- ANÁLISE -->
+<!-- ═══════════════════════════════════════ -->
+<div id="page-analise" class="page">
+
+  <div class="section-title">Análise Detalhada</div>
+  <div class="section-sub">Dados, cenários, scripts e critérios — para consulta quando necessário</div>
+
+  <!-- TOP 20 -->
+  <div class="accord" id="ac1">
+    <div class="accord-head" onclick="toggleAccord('ac1')">
+      <div>
+        <div class="accord-title">Top 20 clientes — maior prejuízo</div>
+        <div class="accord-sub">Perda total dos 20 primeiros: R$ 28.400/mês</div>
+      </div>
+      <div class="accord-arrow">⌄</div>
+    </div>
+    <div class="accord-body">
+      <div style="overflow-x:auto;">
+      <table>
+        <thead><tr><th>#</th><th>Empresa</th><th>Regime</th><th>Honorário</th><th>Perda/mês</th><th>Ação</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>LOVATO MOVEIS LTDA</td><td>Lucro Real</td><td>R$ 3.071</td><td class="loss">-R$ 3.132</td><td><span class="badge b-av">Avaliar</span></td></tr>
+          <tr><td>2</td><td>SEMATRANS SERV. TRANSPORTES</td><td>Lucro Real</td><td>R$ 1.452</td><td class="loss">-R$ 2.888</td><td><span class="badge b-aum">Aumentar</span></td></tr>
+          <tr><td>3</td><td>MULTIPLUS TECNOLOGIA LTDA</td><td>Lucro Real</td><td>R$ 2.129</td><td class="loss">-R$ 2.085</td><td><span class="badge b-av">Avaliar</span></td></tr>
+          <tr><td>4</td><td>ANDRADE LOCAÇÕES TERRAPLANAGEM</td><td>Lucro Real</td><td>R$ 1.550</td><td class="loss">-R$ 1.994</td><td><span class="badge b-av">Avaliar</span></td></tr>
+          <tr><td>5</td><td>ISABELLA F. CAGALLI CUNHA</td><td>Simples Nacional</td><td>R$ 1.021</td><td class="loss">-R$ 1.829</td><td><span class="badge b-av">Avaliar</span></td></tr>
+          <tr><td>6</td><td>MARCIO E JOENILSON INSUMOS</td><td>Simples Nacional</td><td>R$ 752</td><td class="loss">-R$ 1.815</td><td><span class="badge b-aum">Aumentar</span></td></tr>
+          <tr><td>7</td><td>AKIVEST COMERCIO DE ROUPAS</td><td>Simples Nacional</td><td>R$ 3.482</td><td class="loss">-R$ 1.729</td><td><span class="badge b-av">Avaliar</span></td></tr>
+          <tr><td>8</td><td>NOVELTY PARTNERS LTDA</td><td>Lucro Real</td><td>R$ 4.000</td><td class="loss">-R$ 1.581</td><td><span class="badge b-aum">Aumentar</span></td></tr>
+          <tr><td>9</td><td>SCOLLA LTDA</td><td>Lucro Real</td><td>R$ 1.257</td><td class="loss">-R$ 1.542</td><td><span class="badge b-aum">Aumentar</span></td></tr>
+          <tr><td>10</td><td>PKNET SERV. TELECOMUNICAÇÕES</td><td>Simples Nacional</td><td>R$ 1.541</td><td class="loss">-R$ 1.492</td><td><span class="badge b-aum">Aumentar</span></td></tr>
+          <tr><td>11</td><td>IVANEI BARTZ COMERCIO MOVEIS</td><td>Simples Nacional</td><td>R$ 516</td><td class="loss">-R$ 1.468</td><td><span class="badge b-plan">Planicon</span></td></tr>
+          <tr><td>12</td><td>SMA BORRACHAS LTDA</td><td>Simples Nacional</td><td>R$ 735</td><td class="loss">-R$ 1.451</td><td><span class="badge b-plan">Planicon</span></td></tr>
+          <tr><td>13</td><td>WILLIAN MARTINS GARCIA</td><td>Simples Nacional</td><td>R$ 494</td><td class="loss">-R$ 1.415</td><td><span class="badge b-aum">Aumentar</span></td></tr>
+          <tr><td>14</td><td>MANUTEC CONSTRUCOES LTDA</td><td>Lucro Real</td><td>R$ 1.470</td><td class="loss">-R$ 1.405</td><td><span class="badge b-av">Avaliar</span></td></tr>
+          <tr><td>15</td><td>LUMEN SERV. DE ENGENHARIA</td><td>Simples Nacional</td><td>R$ 280</td><td class="loss">-R$ 985</td><td><span class="badge b-plan">Planicon</span></td></tr>
+          <tr><td>16</td><td>MARCENARIA MERCER LTDA</td><td>Simples Nacional</td><td>R$ 643</td><td class="loss">-R$ 925</td><td><span class="badge b-plan">Planicon</span></td></tr>
+          <tr><td>17</td><td>JOEL A.R. GARRETT COMPUTADORES</td><td>Lucro Real</td><td>R$ 4.349</td><td class="loss">-R$ 919</td><td><span class="badge b-av">Avaliar</span></td></tr>
+          <tr><td>18</td><td>CAFE JOSEPH LTDA</td><td>Simples Nacional</td><td>R$ 586</td><td class="loss">-R$ 885</td><td><span class="badge b-plan">Planicon</span></td></tr>
+          <tr><td>19</td><td>FILIAL SP H. E. KERICO</td><td>Lucro Real</td><td>R$ 591</td><td class="loss">-R$ 842</td><td><span class="badge b-av">Avaliar</span></td></tr>
+          <tr><td>20</td><td>DESAPEGARCAR INTERMEDIACAO</td><td>Simples Nacional</td><td>R$ 280</td><td class="loss">-R$ 828</td><td><span class="badge b-plan">Planicon</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <div class="accord" id="ac2">
+    <div class="accord-head" onclick="toggleAccord('ac2')">
+      <div>
+        <div class="accord-title">Scripts de abordagem</div>
+        <div class="accord-sub">Migração Planicon · Reajuste LR/LP · Distrato</div>
+      </div>
+      <div class="accord-arrow">⌄</div>
+    </div>
+    <div class="accord-body">
+      <div class="script-card">
+        <div class="script-label">Script 1 — Migração Planicon (WhatsApp)</div>
+        <div class="script-text">"Olá [Nome], tudo bem? A Gaideski está lançando o Planicon, uma plataforma digital desenvolvida especialmente para empresas do Simples Nacional — atendimento ágil, portal do cliente, todas as obrigações em dia e honorário fixo de R$ 280/mês. Com base no perfil da [Empresa], você está entre os primeiros que estamos convidando. Posso te enviar os detalhes?"</div>
+        <div class="script-tip">⚡ Se recusar: "Entendo, [Nome]. Nesse caso precisamos comunicar que o contrato atual não pode ser mantido. Podemos encerrar com 30 dias de aviso e vou te indicar um escritório de confiança."</div>
+      </div>
+      <div class="script-card" style="margin-top:12px;">
+        <div class="script-label">Script 2 — Reajuste LR/LP (reunião obrigatória)</div>
+        <div class="script-text">"[Nome], fizemos uma revisão completa da nossa carteira e identificamos que o honorário atual da [Empresa] não está cobrindo o custo real do serviço. A proposta é passar de R$ [atual] para R$ [novo] a partir de [data]. Posso detalhar o que compõe esse valor?"</div>
+        <div class="script-tip">⚡ Para aumentos acima de 50%: propor escalonamento — valor intermediário agora + revisão em 6 meses.</div>
+      </div>
+      <div class="script-card" style="margin-top:12px;">
+        <div class="script-label">Script 3 — Distrato</div>
+        <div class="script-text">"[Nome], infelizmente não chegamos a um acordo. Precisamos encerrar o contrato com 30 dias de aviso. Nossa equipe entregará toda a documentação atualizada e vou te indicar um escritório de confiança para continuar te atendendo."</div>
+        <div class="script-tip">⚡ Sempre indicar outro escritório — protege a reputação da Gaideski e evita CRC.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CRITÉRIOS DISTRATO -->
+  <div class="accord" id="ac3">
+    <div class="accord-head" onclick="toggleAccord('ac3')">
+      <div>
+        <div class="accord-title">Critérios de distrato</div>
+        <div class="accord-sub">Quando encerrar · quando nunca encerrar</div>
+      </div>
+      <div class="accord-arrow">⌄</div>
+    </div>
+    <div class="accord-body" style="padding-top:16px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div>
+          <div style="font-size:13px;font-weight:600;color:#A61C23;margin-bottom:10px;">❌ Distrato imediato</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+            <li style="font-size:13px;color:#334155;padding:8px 12px;background:#fef2f2;border-radius:6px;">Cliente Planicon que recusar migração para R$ 280</li>
+            <li style="font-size:13px;color:#334155;padding:8px 12px;background:#fef2f2;border-radius:6px;">LR/LP que recusar reajuste no prazo de 10 dias úteis</li>
+            <li style="font-size:13px;color:#334155;padding:8px 12px;background:#fef2f2;border-radius:6px;">Honorário cadastrado abaixo de R$ 100 (sem receita real)</li>
+            <li style="font-size:13px;color:#334155;padding:8px 12px;background:#fef2f2;border-radius:6px;">Aumento necessário &gt;100% + sem potencial de upsell</li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:#15803d;margin-bottom:10px;">✅ Nunca fazer distrato</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+            <li style="font-size:13px;color:#334155;padding:8px 12px;background:#f0fdf4;border-radius:6px;">Cliente deficitário dentro de grupo econômico saudável — negociar o conjunto</li>
+            <li style="font-size:13px;color:#334155;padding:8px 12px;background:#f0fdf4;border-radius:6px;">Cliente com potencial imediato de planejamento tributário ou abertura de filial</li>
+            <li style="font-size:13px;color:#334155;padding:8px 12px;background:#f0fdf4;border-radius:6px;">Caso onde o distrato impacta outros contratos do mesmo grupo</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CENÁRIOS -->
+  <div class="accord" id="ac4">
+    <div class="accord-head" onclick="toggleAccord('ac4')">
+      <div>
+        <div class="accord-title">Comparativo de cenários estratégicos</div>
+        <div class="accord-sub">C1: Aumento · C2: Planicon · C3: Híbrido ⭐</div>
+      </div>
+      <div class="accord-arrow">⌄</div>
+    </div>
+    <div class="accord-body">
+      <table>
+        <thead><tr><th>Cenário</th><th>Nova receita</th><th>Nova margem</th><th>EBITDA/ano</th><th>Valuation 5x</th><th>Risco</th></tr></thead>
+        <tbody>
+          <tr><td>C1 — Aumento LR/LP</td><td>R$ 378.510</td><td>37,1%</td><td>R$ 1,68M</td><td>R$ 8,4M</td><td style="color:#A61C23;font-weight:600;">Alto</td></tr>
+          <tr><td>C2 — Migração Planicon</td><td>R$ 315.574</td><td>33,3%</td><td>R$ 1,26M</td><td>R$ 6,3M</td><td style="color:#d97706;font-weight:600;">Baixo</td></tr>
+          <tr style="background:#f0f9ff;"><td><strong>⭐ C3 — Híbrido</strong></td><td><strong>R$ 369.170</strong></td><td style="color:#15803d;font-weight:700;">43,0%</td><td style="color:#15803d;font-weight:700;">R$ 1,9M</td><td style="color:#15803d;font-weight:700;">R$ 9,5M</td><td style="color:#d97706;font-weight:600;">Médio</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ─── NAVEGAÇÃO ───
+function goTo(page, btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ─── CHECKLIST ───
+const state = JSON.parse(localStorage.getItem('gaideski_check')||'{}');
+
+document.querySelectorAll('.check-item').forEach(item => {
+  const id = item.dataset.id;
+  if(state[id]) item.classList.add('done');
+});
+
+function toggle(item){
+  const id = item.dataset.id;
+  item.classList.toggle('done');
+  state[id] = item.classList.contains('done');
+  localStorage.setItem('gaideski_check', JSON.stringify(state));
+  updateProgress();
+}
+
+function updateProgress(){
+  const all = document.querySelectorAll('.check-item');
+  const done = document.querySelectorAll('.check-item.done');
+  const pct = Math.round((done.length/all.length)*100);
+  document.getElementById('progressBar').style.width = pct+'%';
+  document.getElementById('progressLabel').textContent = done.length+' de '+all.length+' tarefas concluídas ('+pct+'%)';
+
+  // per group
+  [1,2,3,4].forEach(g=>{
+    const ga = document.querySelectorAll('[data-group="'+g+'"]');
+    const gd = document.querySelectorAll('[data-group="'+g+'"].done');
+    const el = document.getElementById('prog-'+g);
+    if(el) el.textContent = gd.length+'/'+ga.length+' concluídas';
+  });
+}
+
+updateProgress();
+
+// ─── ACORDEÕES ───
+function toggleAccord(id){
+  document.getElementById(id).classList.toggle('open');
+}
+</script>
+</body>
+</html>
